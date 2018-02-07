@@ -1,0 +1,32 @@
+.weather-box {
+  /* background: red; */
+  /* height: 100px; */
+  margin-bottom: 8px;
+}
+
+.delete-box-btn {
+  padding-right: 0;
+}
+
+.weather-img {
+  padding: 0;
+}
+
+.text-left {
+  text-align: left;
+  margin: 0;
+}
+
+.inner {
+  margin: 10px;
+}
+
+.trash-btn {
+  background: transparent;
+  border: none;
+}
+
+.trash-btn:focus {
+  border: none;
+  outline: none;
+}
