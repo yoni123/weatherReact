@@ -1,19 +1,34 @@
 import React from 'react';
 import { Icon } from 'react-fa'
 import './commentBox.css'
+import { deleteComment } from "./actions/index";
+import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    deleteComment: deleteComment
+  }, dispatch);
+
+};
+
+const mapStateToProps = state => {
+  return { reduxCities: state.cities };
+};
+
 class CommentBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = { id: props.id };
+    console.log('v', props);
   }
 
   componentWillReceiveProps(newProps) {
-    this.setState({ id: newProps.id })
+   // this.setState({ id: newProps.id })
   }
 
   deleteComment = () => {
-    console.log(this.state.id);
-    this.props.deleteComment(this.state.id);
+    this.props.deleteComment(this.props.cityId, this.props.commentId);
   }
   render() {
     return (
@@ -32,4 +47,4 @@ class CommentBox extends React.Component {
   }
 }
 
-export default CommentBox;
+export default connect(mapStateToProps,mapDispatchToProps)(CommentBox);

@@ -2,13 +2,26 @@ import React, { Component } from 'react';
 import './App.css';
 import WeatherListBox from './weatherListBox';
 import SearchForm from './SearchForm';
-import ServerManager from './ServerManager';
 import axios from 'axios';
+import { connect } from "react-redux";
+import { getAllCities } from "./actions/index";
+import { bindActionCreators } from 'redux';
 
-class App extends Component {
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    getAllCities: getAllCities
+  }, dispatch);
+
+};
+
+const mapStateToProps = state => {
+  return { reduxCities: state.cities };
+};
+class ConnectedApp extends Component {
   constructor(props) {
     super(props);
     this.state = { cities: [], comments: {} };
+    this.props.getAllCities();
   }
 
   addComment = (obj) => {
@@ -48,16 +61,13 @@ class App extends Component {
   }
 
   deleteComment = (ids) => {
-  //  console.log(ids);
     let index = this._getIndexByid(ids.cityId);
-    //console.log(this.state.cities[index].comments);
     let {cities} = this.state;
     let temp = cities[index].comments;
     temp = temp.filter(function(e) {
       return e.id !== ids.commentId;
     });
     cities[index].comments = temp;
-   // console.log(temp);
     this.setState({cities: cities});
   }
 
@@ -76,5 +86,7 @@ class App extends Component {
     );
   }
 }
+
+const App = connect(mapStateToProps, mapDispatchToProps)(ConnectedApp);
 
 export default App;

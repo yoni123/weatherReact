@@ -1,7 +1,18 @@
 import React from 'react';
 import axios from 'axios';
-import ServerManager from './ServerManager';
 import { error } from 'util';
+import { connect } from "react-redux";
+import { addCityToDB, getAllCities } from "./actions/index";
+import { bindActionCreators } from 'redux';
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    addCityToDB: addCityToDB,
+    getAllCities: getAllCities
+  }, dispatch);
+
+};
+
 
 class CityObj {
   constructor(obj) {
@@ -26,7 +37,7 @@ class CityObj {
 }
 
 
-class SearchForm extends React.Component {
+class ConnectedSearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,20 +58,24 @@ class SearchForm extends React.Component {
 // .catch(error => {
 //   console.log('Error fetching and parsing data', error);
 // });
-
     let city = this.input.value;
-    var url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=30067fef6af3503bfe31562948f3958b";
-    axios.get(url)
-      .then(response => {
-        let newCity = new CityObj(response);
-        this.setState({ cities: this.state.cities.concat([newCity]) }, () => {
-          this.props.addedCity(this.state.cities)
-        });
-      })
-      .catch(error => {
-        alert("Invalid city");
-        console.log('Error fetching and parsing data', error);
-      });
+    if(city != "") {
+    this.props.addCityToDB(city);
+    }
+  // this.props.getAllCities();
+
+    // var url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=30067fef6af3503bfe31562948f3958b";
+    // axios.get(url)
+    //   .then(response => {
+    //     let newCity = new CityObj(response);
+    //     this.setState({ cities: this.state.cities.concat([newCity]) }, () => {
+    //       this.props.addedCity(this.state.cities)
+    //     });
+    //   })
+    //   .catch(error => {
+    //     alert("Invalid city");
+    //     console.log('Error fetching and parsing data', error);
+    //   });
   }
 
 
@@ -72,25 +87,10 @@ class SearchForm extends React.Component {
           <button className="btn btn-primary" onClick={this.handleSubmit} type="button">Button</button>
         </div>
       </div>
-
-
-      // {/* <form action="#" id="getWeatherForm" onSubmit={this.handleSubmit}>
-      //     <div className="input-group">
-      //         <input
-      //             type="text"
-      //             className="form-control"
-      //             id="city"
-      //             placeholder="Enter city"
-      //             required
-      //             value={this.state.city}
-      //             onChange={(event) => this.setState({city: event.target.value})}/>
-      //         <span className="input-group-btn">
-      //             <button className="btn btn-default" type="submit">Go!</button>
-      //         </span>
-      //     </div>
-      // </form> */}
     );
   }
 }
+
+const SearchForm = connect(null, mapDispatchToProps)(ConnectedSearchForm);
 
 export default SearchForm;

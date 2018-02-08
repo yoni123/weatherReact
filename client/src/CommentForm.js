@@ -1,27 +1,35 @@
 import React from 'react';
 import CommentInput from './CommentInput'
+import { addComment } from "./actions/index";
+import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    addComment: addComment
+  }, dispatch);
+
+};
+
+const mapStateToProps = state => {
+  return { reduxCities: state.cities };
+};
+
+
+
 class CommentForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { userNameText: "", commentText: "" };
   }
-  s4 = () => {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  guid = () => {
-    return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' +
-      this.s4() + '-' + this.s4() + this.s4() + this.s4();
-  }
+
 
   submitComment = () => {
     let comment = {
       userName: this.state.userNameText,
-      commentText: this.state.commentText,
-      id: this.guid()
+      text: this.state.commentText,
     }
-    this.props.addComment(comment);
+    this.props.addComment(this.props.cityId, comment);
   }
 
   content = (text, type) => {
@@ -45,4 +53,4 @@ class CommentForm extends React.Component {
   }
 }
 
-export default CommentForm;
+export default connect(mapStateToProps, mapDispatchToProps)(CommentForm);
