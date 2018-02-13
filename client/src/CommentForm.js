@@ -8,14 +8,11 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators({
     addComment: addComment
   }, dispatch);
-
 };
 
 const mapStateToProps = state => {
   return { reduxCities: state.cities };
 };
-
-
 
 class CommentForm extends React.Component {
   constructor(props) {
@@ -23,12 +20,12 @@ class CommentForm extends React.Component {
     this.state = { userNameText: "", commentText: "", val: "" };
   }
 
-
   submitComment = () => {
     let comment = {
       userName: this.state.userNameText,
       text: this.state.commentText,
     }
+
     if (comment.userName && comment.text) {
       this.setState({ userNameText: "", commentText: "" });
       this.props.addComment(this.props.cityId, comment);
@@ -49,7 +46,7 @@ class CommentForm extends React.Component {
         <div className="col-md-12 justify-content-center">
           <CommentInput placeholder="User name" content={this.content} val={this.state.userNameText} />
           <CommentInput placeholder="Enter comment" content={this.content} val={this.state.commentText} />
-          <button className="btn btn-primary float-left" onClick={this.submitComment}>submit</button>
+          <button className="btn btn-primary float-left" onClick={this.submitComment}>Send</button>
         </div>
       </div>
     )

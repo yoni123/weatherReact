@@ -5,7 +5,6 @@ const City = require('./cityModel');
 const app = express();
 const url = 'mongodb://localhost/weatherReactDB';
 const request = require('request');
-const http = require("http");
 
 mongoose.connect(url, function (err, db) {
   if (err) {
@@ -15,18 +14,15 @@ mongoose.connect(url, function (err, db) {
   }
 });
 
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
 app.get('/cities', function (req, res) {
-
   City.find(function (err, result) {
-    // console.log("wow ", result)
-    res.send(result);
+    if (!err) {
+      res.send(result);
+    }
   });
-
 });
 
 function addCity(cityName, response) {
@@ -53,20 +49,17 @@ function addCity(cityName, response) {
 }
 
 app.post('/city', function (req, response) {
-
   let cityName = req.body.city.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
   City.find({ name: cityName }, (err, res) => {
     if (res.length > 0) {
       response.send({ cod: 200, isexist: true });
     } else {
-     addCity(cityName, response);
+      addCity(cityName, response);
     }
   })
-
 });
 
 app.delete('/city/:id', function (req, res) {
-  console.log(req.params.id);
   const id = req.params.id;
   City.findById(id, (err, city) => {
     city.remove((err) => {
@@ -95,16 +88,11 @@ app.post('/comment/:id', (req, res) => {
 
 
 app.delete('/city/:cityId/comment/:commentId', (req, res) => {
-  console.log(req.params);
   const { cityId, commentId } = req.params;
-  console.log('f', cityId, commentId);
-
   City.findById(cityId, (err, city) => {
-    console.log(city);
     city.comments.id(commentId).remove();
     city.save(function (err) {
       if (err) {
-        console.error(err);
         res.sendStatus(500).send(err);
       }
       else {
@@ -115,9 +103,4 @@ app.delete('/city/:cityId/comment/:commentId', (req, res) => {
 })
 
 app.listen(3001);
-
-
-
-
-
 

@@ -9,7 +9,6 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators({
     deleteComment: deleteComment
   }, dispatch);
-
 };
 
 const mapStateToProps = state => {
@@ -19,25 +18,19 @@ const mapStateToProps = state => {
 class CommentBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { id: props.id };
-    console.log('v', props);
-  }
-
-  componentWillReceiveProps(newProps) {
-   // this.setState({ id: newProps.id })
+    this.state = { id: props.comment._id };
   }
 
   deleteComment = () => {
-    this.props.deleteComment(this.props.cityId, this.props.commentId);
+    this.props.deleteComment(this.props.cityId, this.state.id);
   }
   render() {
     return (
       <div className="row">
-        <div className="col-md-10">
-          <p className="comment" >Written by: {this.props.userName} - {this.props.text}</p>
+        <div className="col-10">
+          <p className="comment" >Written by: <b>{this.props.comment.userName}</b> - {this.props.comment.text}</p>
         </div>
-
-        <div className="col-md-2">
+        <div className="col-2">
           <button className="float-right delete-btn" onClick={this.deleteComment}>
             <Icon className="flost-right" name="trash" />
           </button>
@@ -47,4 +40,4 @@ class CommentBox extends React.Component {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(CommentBox);
+export default connect(mapStateToProps, mapDispatchToProps)(CommentBox);

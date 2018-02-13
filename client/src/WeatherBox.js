@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './weatherBox.css';
 import CommentForm from './CommentForm'
 import { Icon } from 'react-fa'
@@ -13,20 +12,11 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators({
     deleteCity: deleteCity
   }, dispatch);
-
 };
 
 const mapStateToProps = state => {
-  // console.log(state);
   return { reduxCities: state.cities };
 };
-
-
-// const mapStateToProps = state => {
-//   // console.log(state);
-//   return { reduxCities: state.cities };
-// };
-
 
 class CityObj {
   constructor(obj, cityId) {
@@ -38,7 +28,6 @@ class CityObj {
     this._id = cityId;
     this.comments = [];
   }
-
 }
 
 class WeatherBox extends React.Component {
@@ -63,38 +52,14 @@ class WeatherBox extends React.Component {
         })
       })
       .catch(error => {
-        // alert("Invalid city");
         console.log('Error fetching and parsing data', error);
       });
   }
 
-  componentWillReceiveProps(newProps) {
-    //console.log("rrrr" + this.props.cities[0]);
-    // console.log("newprops: oo", newProps);
-    //  this.weatherData(props.cityName, props.id);
-  }
-
   deleteCity = () => {
-    console.log('dele', this.state.id);
     this.props.deleteCity(this.state.id);
   }
 
-  // addComment = (comment) => {
-  //   let updateComment = {
-  //     comment: comment,
-  //     id: this.id
-  //   }
-  //   this.props.addComment(updateComment);
-  // }
-
-  _getObjectByid = (id) => {
-    let { cities } = this.props;
-    for (let i = 0; i < cities.length; i++) {
-      if (cities[i]._id == id) {
-        return i;
-      }
-    }
-  }
   deleteComment = (id) => {
     let ids = {
       cityId: this.id,
@@ -102,39 +67,29 @@ class WeatherBox extends React.Component {
     }
     this.props.deleteComment(ids);
   }
-  render() {
-    if (this.state.isLoading) {
-      console.log('stop loading');
-    } else {
-      console.log('loading');
-      // return (
-      //   <Icon name="spinner " spin/>
-      // )
-    }
-    return (
-      <div className="col-md-3 weather-container" ref={this.id = this.state.id} id={this.state.id}>
 
+  render() {
+    return (
+      <div className="col-lg-3 col-md-4 col-sm-6 col-9 weather-container" ref={this.id = this.state.id} id={this.state.id}>
         <div className="inner">
           <div className={this.state.isLoading ? "d-block" : "d-none"}>
             <Icon name="spinner " spin />
           </div>
           <div className={`${!this.state.isLoading ? "" : "d-none "}row weather-box`}>
-            <div className="col-sm-2 weather-img">
+            <div className="col-2 weather-img">
               <img src={this.state.imageUrl} alt="weather description img" />
             </div>
-            <div className="col-sm-8">
+            <div className="col-8">
               <h3 className="text-left">{this.state.name}</h3>
-              <p className="text-left">{`${this.state.weather} ${this.state.temp} | C`}</p>
+              <p className="text-left">{this.state.weather} &deg;{this.state.temp}</p>
             </div>
-            <div className="col-sm-2 delete-box-btn">
+            <div className="col-2 delete-box-btn">
               <button className="float-right trash-btn" onClick={this.deleteCity}><Icon name="trash" /></button>
             </div>
           </div>
           <CommentForm cityId={this.state.id} />
           <CommentsListBox cityId={this.state.id} />
-          {/* deleteComment={this.deleteComment} city={this.props.cities[this._getObjectByid(this.id)]}/> */}
         </div>
-
       </div>
     )
   }

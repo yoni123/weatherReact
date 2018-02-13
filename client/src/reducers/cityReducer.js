@@ -1,14 +1,7 @@
 
-
 const cityReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_CITY': {
-      console.log("wowow")
-      return [...state, action.payload];
-    }
-
-    case 'GOT_DATA': {
-      // console.log("got data");
       return [...state, action.payload];
     }
 
@@ -21,13 +14,12 @@ const cityReducer = (state = [], action) => {
       if (action.payload.cod == 404) {
         alert(action.payload.message);
       } else if (action.payload.cod == 200) {
-       if(!action.payload.isexist) {
-        return [...state, action.payload.city];
-       } else {
-         return state;
-       }
+        if (!action.payload.isexist) {
+          return [...state, action.payload.city];
+        } else {
+          return state;
+        }
       }
-      //
     }
 
     case 'GET_ALL_CITIES': {
@@ -46,7 +38,7 @@ const cityReducer = (state = [], action) => {
 
     case 'DELETE_COMMENT': {
       let city = state.find(({ _id }) => _id == action.payload.cityId);
-      let filteredArray = city.comments.filter(({_id}) => _id !== action.payload.commentId);
+      let filteredArray = city.comments.filter(({ _id }) => _id !== action.payload.commentId);
       city.comments = filteredArray;
       return [...state];
     }
