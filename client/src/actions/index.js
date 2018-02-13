@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { error } from 'util';
 
 export const addCityToDB = (city) => {
   return (dispatch) => {

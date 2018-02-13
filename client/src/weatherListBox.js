@@ -1,7 +1,6 @@
 import React from 'react';
 import WeatherBox from './WeatherBox'
 import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
 
 const mapStateToProps = state => {
   return { reduxCities: state.cities };

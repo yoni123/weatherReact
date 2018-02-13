@@ -17,7 +17,7 @@ class ConnectedSearchForm extends React.Component {
 
   handleSubmit() {
     let city = this.input.value;
-    if (city != "") {
+    if (city !== "") {
       this.props.addCityToDB(city);
     }
   }

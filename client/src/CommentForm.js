@@ -33,7 +33,7 @@ class CommentForm extends React.Component {
   }
 
   content = (text, type) => {
-    if (type == "User name") {
+    if (type === "User name") {
       this.setState({ userNameText: text });
     } else {
       this.setState({ commentText: text });

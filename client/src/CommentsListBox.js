@@ -1,6 +1,5 @@
 import React from 'react';
 import CommentBox from './CommentBox'
-import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import './commentsListBox.css';
 
@@ -18,7 +17,7 @@ class CommentsListBox extends React.Component {
     this.setState({
       cityId: newProps.cityId,
       comments: newProps.reduxCities.find(({ _id }) =>
-        _id == newProps.cityId).comments
+        _id === newProps.cityId).comments
     })
   }
 
