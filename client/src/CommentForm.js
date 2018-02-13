@@ -20,7 +20,7 @@ const mapStateToProps = state => {
 class CommentForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { userNameText: "", commentText: "" };
+    this.state = { userNameText: "", commentText: "", val: "" };
   }
 
 
@@ -29,7 +29,10 @@ class CommentForm extends React.Component {
       userName: this.state.userNameText,
       text: this.state.commentText,
     }
-    this.props.addComment(this.props.cityId, comment);
+    if (comment.userName && comment.text) {
+      this.setState({ userNameText: "", commentText: "" });
+      this.props.addComment(this.props.cityId, comment);
+    }
   }
 
   content = (text, type) => {
@@ -44,8 +47,8 @@ class CommentForm extends React.Component {
     return (
       <div className="row">
         <div className="col-md-12 justify-content-center">
-          <CommentInput placeholder="User name" content={this.content} />
-          <CommentInput placeholder="Enter comment" content={this.content} />
+          <CommentInput placeholder="User name" content={this.content} val={this.state.userNameText} />
+          <CommentInput placeholder="Enter comment" content={this.content} val={this.state.commentText} />
           <button className="btn btn-primary float-left" onClick={this.submitComment}>submit</button>
         </div>
       </div>

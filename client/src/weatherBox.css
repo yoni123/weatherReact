@@ -1,15 +1,21 @@
 .weather-box {
   /* background: red; */
   /* height: 100px; */
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
+}
+
+.weather-container {
+  /* background: rgb(128, 128, 128, 0.28) */
+  margin-top: 5px;
+  padding: 0 5px;
 }
 
 .delete-box-btn {
-  padding-right: 0;
+  /* padding-right: 0; */
 }
 
 .weather-img {
-  padding: 0;
+  padding: 0 5px;
 }
 
 .text-left {
@@ -18,7 +24,13 @@
 }
 
 .inner {
-  margin: 10px;
+  /* margin: 10px; */
+  /* border: 1px solid red; */
+  padding: 7px;
+  background-color: rgba(128, 128, 128, 0.28);
+  border-radius: 5px;
+  /* opacity: 0.28; */
+  max-height: 327px;
 }
 
 .trash-btn {

@@ -13,7 +13,7 @@ const cityReducer = (state = [], action) => {
     }
 
     case 'INVALID_CITY': {
-      alert('oops... somthing went wrong! \nDid you type currect city?');
+      alert(action.payload);
       return state;
     }
 
@@ -21,8 +21,11 @@ const cityReducer = (state = [], action) => {
       if (action.payload.cod == 404) {
         alert(action.payload.message);
       } else if (action.payload.cod == 200) {
-        console.log("got response ", action.payload.city)
+       if(!action.payload.isexist) {
         return [...state, action.payload.city];
+       } else {
+         return state;
+       }
       }
       //
     }
@@ -38,16 +41,13 @@ const cityReducer = (state = [], action) => {
     case 'ADD_COMMENT': {
       var found = state.find(({ _id }) => _id == action.payload._id);
       found.comments.push(action.payload.comment);
-      console.log("found ", found);
       return [...state];
     }
 
     case 'DELETE_COMMENT': {
-      var city = state.find(({ _id }) => _id == action.payload.cityId);
-
-      city.comments.filter(({ _id }) => _id !== action.payload.commentId);
-      console.log('delete comment', action.payload.commentId);
-
+      let city = state.find(({ _id }) => _id == action.payload.cityId);
+      let filteredArray = city.comments.filter(({_id}) => _id !== action.payload.commentId);
+      city.comments = filteredArray;
       return [...state];
     }
 

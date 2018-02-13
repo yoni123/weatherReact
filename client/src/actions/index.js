@@ -10,9 +10,9 @@ export const addCityToDB = (city) => {
         dispatch({ type: "ADD_CITY_TO_DB", payload: response.data });
       })
       .catch(error => {
-        console.log("ererererer ", error.response.status)
+        console.log("ererererer ", error.response)
         if(error.response.status === 500) {
-       dispatch({ type: "INVALID_CITY", payload: error });
+       dispatch({ type: "INVALID_CITY", payload: error.response.data });
         }
       });
   }

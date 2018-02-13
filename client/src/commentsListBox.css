@@ -1,0 +1,4 @@
+.comments-list {
+  max-height: 115px;
+  overflow-y: scroll;
+}

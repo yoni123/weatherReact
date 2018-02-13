@@ -29,28 +29,10 @@ app.get('/cities', function (req, res) {
 
 });
 
-app.post('/city', function (req, response) {
-
-  const url = "http://api.openweathermap.org/data/2.5/weather?q=" + req.body.city + "&units=metric&appid=30067fef6af3503bfe31562948f3958b";
-  //     http.get(url, res => { 
-  //       // console.log('resq ',res);
-  //       // console.log('errq ', err);
-  //       // console.log('bodyq ',body);
-  //       let body;
-  //       res.on('data', data => {
-  //         body = data;
-  //       });
-
-  //       res.on('end', () =>{
-  //         body = JSON.parse(body);
-  // console.log(body);
-  // if(body.cod == 200) {
-
-  // }
-  //       })
+function addCity(cityName, response) {
+  const url = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=metric&appid=30067fef6af3503bfe31562948f3958b";
   request(url, function (req, res, body) {
     const result = JSON.parse(body);
-    console.log(result);
     if (result.cod == 200) {
       let city = new City({
         name: result.name,
@@ -58,21 +40,28 @@ app.post('/city', function (req, response) {
       });
       city.save(function (err) {
         if (err) {
-          //  console.error('save err',err);
           response.status(500).send(err);
         }
         else {
-          // console.log('city',city);
-          response.send({ cod: 200, city: city });
+          response.send({ cod: 200, city: city, isexist: false });
         }
       });
     } else {
-      console.log(result);
-      //console.log('aa',JSON.parse(body));
-      //response.send({status: 100, messege: body.messege}); //"oops... somthing went wrong! \nDid you type currect city?"})
-      response.status(500).send();
+      response.status(500).send('oops... somthing went wrong! \nDid you type currect city?');
     }
   });
+}
+
+app.post('/city', function (req, response) {
+
+  let cityName = req.body.city.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+  City.find({ name: cityName }, (err, res) => {
+    if (res.length > 0) {
+      response.send({ cod: 200, isexist: true });
+    } else {
+     addCity(cityName, response);
+    }
+  })
 
 });
 

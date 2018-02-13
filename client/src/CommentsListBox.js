@@ -2,6 +2,7 @@ import React from 'react';
 import CommentBox from './CommentBox'
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
+import './commentsListBox.css';
 const mapStateToProps = state => {
   // console.log(state);
   return { reduxCities: state.cities };
@@ -34,7 +35,7 @@ componentWillMount(props) {
       return(<div></div>)
     }
     return (
-      <div>
+      <div className="comments-list">
        
         {this.state.currentCity.comments.map((comment, index) => {
         return <CommentBox key={comment._id} cityId={this.state.cityId} userName={comment.userName} text={comment.text} commentId={comment._id}/>

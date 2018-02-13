@@ -44,7 +44,7 @@ class CityObj {
 class WeatherBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: "" }
+    this.state = { name: "", isLoading: true }
     this.weatherData(props.cityName, props.id);
   }
 
@@ -53,12 +53,13 @@ class WeatherBox extends React.Component {
     axios.get(url)
       .then(response => {
         let city = new CityObj(response, cityId);
-        this.setState({ 
-          name: city.name, 
+        this.setState({
+          name: city.name,
           temp: city.temp,
           weather: city.weather,
           imageUrl: city.imageUrl,
           id: city._id,
+          isLoading: false
         })
       })
       .catch(error => {
@@ -71,7 +72,7 @@ class WeatherBox extends React.Component {
     //console.log("rrrr" + this.props.cities[0]);
     // console.log("newprops: oo", newProps);
     //  this.weatherData(props.cityName, props.id);
-    }
+  }
 
   deleteCity = () => {
     console.log('dele', this.state.id);
@@ -102,11 +103,22 @@ class WeatherBox extends React.Component {
     this.props.deleteComment(ids);
   }
   render() {
-    console.log('aaa',this.state);
+    if (this.state.isLoading) {
+      console.log('stop loading');
+    } else {
+      console.log('loading');
+      // return (
+      //   <Icon name="spinner " spin/>
+      // )
+    }
     return (
-      <div className="col-md-3" ref={this.id = this.state.id} id={this.state.id}>
+      <div className="col-md-3 weather-container" ref={this.id = this.state.id} id={this.state.id}>
+
         <div className="inner">
-          <div className="row weather-box">
+          <div className={this.state.isLoading ? "d-block" : "d-none"}>
+            <Icon name="spinner " spin />
+          </div>
+          <div className={`${!this.state.isLoading ? "" : "d-none "}row weather-box`}>
             <div className="col-sm-2 weather-img">
               <img src={this.state.imageUrl} alt="weather description img" />
             </div>
@@ -118,8 +130,8 @@ class WeatherBox extends React.Component {
               <button className="float-right trash-btn" onClick={this.deleteCity}><Icon name="trash" /></button>
             </div>
           </div>
-          <CommentForm cityId={this.state.id}/>
-          <CommentsListBox cityId={this.state.id}/>
+          <CommentForm cityId={this.state.id} />
+          <CommentsListBox cityId={this.state.id} />
           {/* deleteComment={this.deleteComment} city={this.props.cities[this._getObjectByid(this.id)]}/> */}
         </div>
 
