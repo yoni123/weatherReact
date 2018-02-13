@@ -17,6 +17,10 @@ mongoose.connect(process.env.CONNECTION_STRING || url, function (err, db) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.get('/', (req, res) => {
+  res.sendFile('./client/public/index.html');
+})
+
 app.get('/cities', function (req, res) {
   City.find(function (err, result) {
     if (!err) {
