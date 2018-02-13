@@ -6,7 +6,7 @@ const app = express();
 const url = 'mongodb://localhost/weatherReactDB';
 const request = require('request');
 
-mongoose.connect(url, function (err, db) {
+mongoose.connect(process.env.CONNECTION_STRING || url, function (err, db) {
   if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
@@ -102,5 +102,5 @@ app.delete('/city/:cityId/comment/:commentId', (req, res) => {
   });
 })
 
-app.listen(3001);
+app.listen(process.env.PORT || 3001);
 
