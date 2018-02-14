@@ -30,7 +30,7 @@ app.get('/cities', function (req, res) {
 });
 
 function addCity(cityName, response) {
-  const url = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=metric&appid=30067fef6af3503bfe31562948f3958b";
+  const url = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=metric&appid=30067fef6af3503bfe31562948f3958b";
   request(url, function (req, res, body) {
     const result = JSON.parse(body);
     if (result.cod == 200) {

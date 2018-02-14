@@ -24,7 +24,7 @@ class CityObj {
     this.name = name;
     this.temp = Math.floor(temp);
     this.weather = first.main;
-    this.imageUrl = 'http://openweathermap.org/img/w/' + first.icon + '.png';
+    this.imageUrl = 'https://openweathermap.org/img/w/' + first.icon + '.png';
     this._id = cityId;
     this.comments = [];
   }
@@ -38,7 +38,7 @@ class WeatherBox extends React.Component {
   }
 
   weatherData = (cityName, cityId) => {
-    var url = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=metric&appid=30067fef6af3503bfe31562948f3958b";
+    var url = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=metric&appid=30067fef6af3503bfe31562948f3958b";
     axios.get(url)
       .then(response => {
         let city = new CityObj(response, cityId);
