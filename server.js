@@ -108,9 +108,9 @@ app.delete('/city/:cityId/comment/:commentId', (req, res) => {
 
 app.listen(process.env.PORT || 3001);
 
-// app.use(function (err, request, response, next) {
+app.use(function (err, request, response, next) {
 
-//   if (err) {
-//       response.sendStatus(500).send("server error please try again later");
-//   }
-// })
+  if (err) {
+      response.sendStatus(500).send("server error please try again later");
+  }
+})
