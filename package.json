@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "start": "node server",
+  "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "cacheDirectories": [
     "node_modules",
-    "react-ui/node_modules"
+    "client/node_modules"
   ],
   "author": "",
   "license": "ISC",
@@ -22,6 +22,12 @@
     "node-fetch": "^2.0.0",
     "request": "^2.83.0"
   },
+  "keywords": [
+    "node",
+    "heroku",
+    "create-react-app",
+    "react"
+  ],
   "devDependencies": {
     "@angular/cli": "^1.6.8"
   }
