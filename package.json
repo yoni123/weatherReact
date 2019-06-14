@@ -16,12 +16,12 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",
-    "body-parser": "^1.18.2",
-    "concurrently": "^3.5.1",
-    "express": "^4.16.2",
-    "mongoose": "^5.0.3",
-    "node-fetch": "^2.0.0",
-    "request": "^2.83.0"
+    "body-parser": "^1.19.0",
+    "concurrently": "^3.6.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.5.15",
+    "node-fetch": "^2.6.0",
+    "request": "^2.88.0"
   },
   "keywords": [
     "node",
@@ -30,6 +30,6 @@
     "react"
   ],
   "devDependencies": {
-    "@angular/cli": "^1.6.8"
+    "@angular/cli": "^1.7.4"
   }
 }
